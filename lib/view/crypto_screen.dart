@@ -1,20 +1,24 @@
-import 'package:emat_project_7/view/crypto_list.dart';
 import 'package:flutter/material.dart';
+import 'package:emat_project_7/view/crypto_list.dart';
+import 'package:provider/provider.dart';
+import 'package:emat_project_7/theme/theme_provider.dart';
 
 class CryptoScreen extends StatelessWidget {
-  final VoidCallback onThemeChanged;
-
-  const CryptoScreen({super.key, required this.onThemeChanged});
+  const CryptoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crypto Price Tracker'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.brightness_6),
-            onPressed: onThemeChanged,
+            icon: Icon(themeProvider.isDarkTheme
+                ? Icons.brightness_7
+                : Icons.brightness_2),
+            onPressed: themeProvider.toggleTheme,
           ),
         ],
       ),
