@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:emat_project_7/view/crypto_screen.dart';
+import 'theme/theme_notifier.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  final ThemeNotifier themeNotifier = ThemeNotifier();
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, themeMode, child) {
+        return MaterialApp(
+          title: 'Crypto Price Tracker',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeMode,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          home: CryptoScreen(
+            onThemeChanged: themeNotifier.toggleTheme,
+          ),
+        );
+      },
     );
   }
 }
